@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andreas Borisov — Гид по Святой Горе Афон|www.athosguide.com</title>
+    <meta name="yandex-verification" content="652cbabdd551fdc0" />
+    <meta name="description" content="Попасть на Афон без проблем. Визовая поддержка в Грецию, джип-туры по Афону с рассказами, онлайн-сопровождение. Персональный гид на Святой Горе.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
-        .hero-bg { background: linear-gradient(135deg, rgba(248,250,252,0.95) 0%, rgba(241,245,249,0.95) 100%), url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=2070&auto=format&fit=crop') center/cover; }
-        .gradient-text { background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .btn-primary { background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%); transition: all 0.3s ease; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgb(30 64 175 / 0.3); }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
-        .visa-badge { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
+       .hero-bg { background: linear-gradient(135deg, rgba(248,250,252,0.95) 0%, rgba(241,245,249,0.95) 100%), url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=2070&auto=format&fit=crop') center/cover; }
+       .gradient-text { background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+       .card-hover { transition: all 0.3s ease; }
+       .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+       .btn-primary { background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%); transition: all 0.3s ease; }
+       .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgb(30 64 175 / 0.3); }
+       .visa-badge { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
@@ -36,11 +40,22 @@
             <nav class="hidden md:flex items-center gap-8">
                 <a href="#about" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition">О гиде</a>
                 <a href="#services" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition">Услуги</a>
+                <a href="#visa" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition">Виза</a>
                 <a href="#contact" class="text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">Связаться</a>
             </nav>
+            <button id="mobile-menu-btn" class="md:hidden text-slate-600">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100">
+        <div class="px-4 py-3 space-y-3">
+            <a href="#about" class="block text-sm font-medium text-slate-600">О гиде</a>
+            <a href="#services" class="block text-sm font-medium text-slate-600">Услуги</a>
+            <a href="#visa" class="block text-sm font-medium text-slate-600">Виза</a>
+            <a href="#contact" class="block text-sm font-medium text-blue-600">Связаться</a>
         </div>
     </div>
-</header>
+</div></header>
 
 <section class="hero-bg pt-32 pb-20 lg:pt-40 lg:pb-28">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,33 +82,134 @@
     </div>
 </section>
 
+<section id="visa" class="py-12 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="visa-badge rounded-2xl p-8 md:p-10 text-white shadow-lg">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i class="fa-solid fa-passport text-2xl"></i>
+                        <h2 class="text-2xl md:text-3xl font-bold">Визовая поддержка в Грецию</h2>
+                    </div>
+                    <p class="text-green-50 text-lg">Без отказов. Полное оформление документов для паломничества на Афон.</p>
+                </div>
+                <a href="https://wa.me/306944476923" target="_blank" class="bg-white text-green-700 font-semibold px-6 py-3 rounded-xl hover:bg-green-50 transition whitespace-nowrap">
+                    Оформить визу
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="py-20 bg-slate-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1593696140826-c58b021acf8b?q=80&w=2070&auto=format&fit=crop" alt="Андреас Борисов гид по Афону" class="rounded-2xl shadow-xl w-full h-[500px] object-cover">
+                <div class="absolute -bottom-6 -right-6 bg-white p-5 rounded-xl shadow-lg border border-slate-100">
+                    <p class="text-3xl font-bold gradient-text">29+</p>
+                    <p class="text-sm text-slate-600">лет опыта</p>
+                </div>
+            </div>
+            <div>
+                <span class="text-blue-600 font-semibold text-sm uppercase tracking-wide">О гиде</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 mb-6">Андреас Борисов</h2>
+                <p class="text-slate-600 mb-4 leading-relaxed">
+                    Гражданин Греции. В сфере греческого туризма работаю с 1995 года, специализируюсь на паломнических турах на Святую Гору Афон.
+                </p>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                    Помогаю паломникам со всего мира посетить Афон: от оформления диамонитириона и шенгенской визы до проведения индивидуальных джип-туров и онлайн-сопровождения.
+                </p>
+                <div class="grid sm:grid-cols-2 gap-4 mb-8">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                            <i class="fa-solid fa-language text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-900">Языки</p>
+                            <p class="text-sm text-slate-600">Русский, Греческий</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                            <i class="fa-solid fa-certificate text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-900">Лицензия</p>
+                            <p class="text-sm text-slate-600">Официальный гид</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200">
+                    <p class="text-slate-700 italic">
+                        <i class="fa-solid fa-quote-left text-blue-200 mr-2"></i>
+                        Моя цель — чтобы ваше паломничество на Афон прошло спокойно, без суеты, и с глубоким духовным содержанием. Посетим Старцев, достойных приемников Святого Паисия Святогорца.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="services" class="py-20 bg-white">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-16">
             <span class="text-blue-600 font-semibold text-sm uppercase tracking-wide">Услуги</span>
             <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 mb-4">Чем я могу помочь</h2>
+            <p class="text-slate-600">Индивидуальный подход к каждому паломнику. Полное сопровождение от визы до возвращения домой.</p>
         </div>
         <div class="grid md:grid-cols-2 gap-8">
             <div class="card-hover bg-slate-50 rounded-2xl p-8 border border-slate-200">
-                <div class="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center mb-6">
-                    <i class="fa-solid fa-jeep text-white text-2xl"></i>
+                <div class="w-14 h-14 rounded-xl overflow-hidden mb-6">
+                    <img src="prado-icon.png" alt="Toyota Prado тур по Афону" class="w-full h-full object-cover">
                 </div>
                 <h3 class="text-2xl font-bold text-slate-900 mb-4">Джип-туры по Афону с рассказами</h3>
                 <p class="text-slate-600 mb-6 leading-relaxed">
-                    Комфортные поездки на внедорожнике по территории Святой Горы. Посещение главных Святынь Православного Мира.
+                    Комфортные поездки на внедорожнике по территории Святой Горы. Посещение главных Святынь Православного Мира хранящихся в Скитах и Монастырях Афона.
                 </p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center gap-3 text-slate-700">
+                        <i class="fa-solid fa-check text-green-600"></i>
+                        Индивидуальные маршруты 1-3 дня
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-700">
+                        <i class="fa-solid fa-check text-green-600"></i>
+                        Разрешение на въезд включено
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-700">
+                        <i class="fa-solid fa-check text-green-600"></i>
+                        Ночлег в монастырях
+                    </li>
+                </ul>
                 <a href="https://wa.me/306944476923" target="_blank" class="btn-primary text-white font-semibold px-6 py-3 rounded-xl inline-block">
                     Заказать джип-тур
                 </a>
             </div>
+            
             <div class="card-hover bg-slate-50 rounded-2xl p-8 border border-slate-200">
                 <div class="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center mb-6">
                     <i class="fa-solid fa-headset text-white text-2xl"></i>
                 </div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-4">Сопровождение онлайн</h3>
+                <h3 class="text-2xl font-bold text-slate-900 mb-4">Сопровождение онлайн в реальном времени</h3>
                 <p class="text-slate-600 mb-6 leading-relaxed">
-                    Проведу для вас онлайн-экскурсию по Афону через любой удобный мессенджер.
+                    Не хотите ездить на джипе, хотите пройтись по тропам Афона? Проведу для вас онлайн-экскурсию по Афону через любой удобный мессенджер. 
+                    Вовремя подам необходимый транспорт, предоставлю описание мест, забронирую заранее ночлеги, билеты на плавсредства, коммерческую лодку, 
+                    предоставлю трекеры для восхождения на Вершину Афона.
                 </p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center gap-3 text-slate-700">
+                        <i class="fa-solid fa-check text-green-600"></i>
+                        WhatsApp, Telegram, Viber
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-700">
+                        <i class="fa-solid fa-check text-green-600"></i>
+                        Видеосвязь из монастырей
+                    </li>
+                    <li class="flex items-center gap-3 text-slate-700">
+                        <i class="fa-solid fa-check text-green-600"></i>
+                        Передача записок и треб
+                    </li>
+                </ul>
                 <a href="https://t.me/+306944476923" target="_blank" class="bg-white border border-slate-300 text-slate-700 font-semibold px-6 py-3 rounded-xl inline-block hover:bg-slate-100 transition">
                     Связаться в мессенджере
                 </a>
@@ -105,19 +221,83 @@
 <section id="contact" class="py-20 bg-slate-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-            <div class="p-8 md:p-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Свяжитесь со мной</h2>
-                <p class="text-slate-600 mb-8">Отвечаю быстро. Консультация по визе и поездке на Афон — бесплатно.</p>
-                <div class="space-y-5 mb-8">
-                    <a href="https://wa.me/306944476923" target="_blank" class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-green-400 hover:bg-green-50 transition group">
-                        <div class="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center">
-                            <i class="fa-brands fa-whatsapp text-white text-2xl"></i>
+            <div class="grid lg:grid-cols-2">
+                <div class="p-8 md:p-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Свяжитесь со мной</h2>
+                    <p class="text-slate-600 mb-8">Отвечаю быстро. Консультация по визе и поездке на Афон — бесплатно.</p>
+                    <div class="space-y-5 mb-8">
+                        <a href="https://wa.me/306944476923" target="_blank" class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-green-400 hover:bg-green-50 transition group">
+                            <div class="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center">
+                                <i class="fa-brands fa-whatsapp text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-slate-900">WhatsApp</p>
+                                <p class="text-sm text-slate-500">+30 694 447 6923</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-right ml-auto text-slate-400 group-hover:text-green-600 transition"></i>
+                        </a>
+                        <a href="https://t.me/+306944476923" target="_blank" class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-blue-400 hover:bg-blue-50 transition group">
+                            <div class="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center">
+                                <i class="fa-brands fa-telegram text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-slate-900">Telegram</p>
+                                <p class="text-sm text-slate-500">+30 694 447 6923</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-right ml-auto text-slate-400 group-hover:text-blue-600 transition"></i>
+                        </a>
+                        <a href="viber://chat?number=306944476923" class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-purple-400 hover:bg-purple-50 transition group">
+                            <div class="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center">
+                                <i class="fa-brands fa-viber text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-slate-900">Viber</p>
+                                <p class="text-sm text-slate-500">+30 694 447 6923</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-right ml-auto text-slate-400 group-hover:text-purple-600 transition"></i>
+                        </a>
+                        <a href="tel:+306944476923" class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-slate-400 hover:bg-slate-50 transition group">
+                            <div class="w-12 h-12 rounded-lg bg-slate-700 flex items-center justify-center">
+                                <i class="fa-solid fa-phone text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-slate-900">Телефон</p>
+                                <p class="text-sm text-slate-500">+30 694 447 6923</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-right ml-auto text-slate-400 group-hover:text-slate-600 transition"></i>
+                        </a>
+                    </div>
+                    <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-info text-blue-600 mt-1"></i>
+                            <p class="text-sm text-slate-700">
+                                <span class="font-semibold">Важно:</span> Для посещения Афона мужчинам требуется специальное разрешение (диамонитирион).
+                            </p>
                         </div>
-                        <div>
-                            <p class="font-semibold text-slate-900">WhatsApp</p>
-                            <p class="text-sm text-slate-500">+30 694 447 6923</p>
+                    </div>
+                </div>
+                <div class="bg-slate-100 p-8 md:p-12 flex items-center">
+                    <form id="contact-form" class="w-full">
+                        <h3 class="text-xl font-bold text-slate-900 mb-6">Оставить заявку</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-sm font-medium text-slate-700 mb-2 block">Ваше имя</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="Иван" required>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-slate-700 mb-2 block">Мессенджер для связи</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="WhatsApp / Telegram" required>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-slate-700 mb-2 block">Сообщение</label>
+                                <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="Расскажите о ваших планах..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary w-full text-white font-semibold px-6 py-3.5 rounded-xl">
+                                Отправить заявку
+                            </button>
+                            <p class="text-xs text-slate-500 text-center">Нажимая кнопку, вы соглашаетесь на обработку данных</p>
                         </div>
-                    </a>
+                    </form>
                 </div>
             </div>
         </div>
@@ -126,13 +306,67 @@
 
 <footer class="bg-slate-900 text-slate-400 py-12">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-            <p class="font-semibold text-white mb-2">Andreas Borisov</p>
-            <p class="text-sm">athosguide.com</p>
-            <p class="text-sm mt-4">© 2024 Andreas Borisov. Все права защищены.</p>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <div class="flex items-center gap-3 justify-center md:justify-start mb-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                        <i class="fa-solid fa-mountain-sun text-white"></i>
+                    </div>
+                    <p class="font-semibold text-white">Andreas Borisov</p>
+                </div>
+                <p class="text-sm">Персональный гид по Святой Горе Афон</p>
+                <p class="text-sm">athosguide.com</p>
+                <a href="tel:+306944476923" class="text-sm text-blue-400 hover:text-blue-300 transition inline-block mt-2">
+                    <i class="fa-solid fa-phone mr-2"></i>+30 694 447 6923
+                </a>
+            </div>
+            <div class="text-center md:text-right">
+                <p class="text-sm mb-2">© 2024 Andreas Borisov. Все права защищены.</p>
+                <p class="text-xs text-slate-500">Визовая поддержка и паломнические туры на Афон с 1995 года</p>
+                <div class="flex gap-4 justify-center md:justify-end mt-4">
+                    <a href="https://wa.me/306944476923" target="_blank" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-green-600 flex items-center justify-center transition">
+                        <i class="fa-brands fa-whatsapp text-white"></i>
+                    </a>
+                    <a href="https://t.me/+306944476923" target="_blank" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-blue-600 flex items-center justify-center transition">
+                        <i class="fa-brands fa-telegram text-white"></i>
+                    </a>
+                    <a href="viber://chat?number=306944476923" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-purple-600 flex items-center justify-center transition">
+                        <i class="fa-brands fa-viber text-white"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </footer>
+
+<script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+    });
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Спасибо за заявку! Я свяжусь с вами в ближайшее время через указанный мессенджер.');
+        this.reset();
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const headerOffset = 80;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
