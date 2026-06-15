@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://athosqwest.github.io/sitemap.xml
+Sitemap: https://andreasborisovathos.github.io/athosqwest/sitemap.xml
