@@ -1,0 +1,745 @@
+<html lang="ru"><head>
+<!-- Playables SDK -->
+<script>// Playables SDK v1.0.0
+// Game lifecycle bridge: rAF-based game-ready detection + event communication
+(function() {
+  'use strict';
+
+  // Idempotency: skip if already initialized (e.g., server-side injection
+  // followed by client-side inject-javascript via the Bloks webview component).
+  if (window.playablesSDK) return;
+
+  var HANDLER_NAME = 'playablesGameEventHandler';
+  var ANDROID_BRIDGE_NAME = '_MetaPlayablesBridge';
+  var RAF_FRAME_THRESHOLD = 3;
+
+  var gameReadySent = false;
+  var firstInteractionSent = false;
+  var errorSent = false;
+  var frameCount = 0;
+  var originalRAF = window.requestAnimationFrame;
+
+  // --- Transport Layer ---
+
+  function hasIOSBridge() {
+    return !!(window.webkit &&
+              window.webkit.messageHandlers &&
+              window.webkit.messageHandlers[HANDLER_NAME]);
+  }
+
+  function hasAndroidBridge() {
+    return !!(window[ANDROID_BRIDGE_NAME] &&
+              typeof window[ANDROID_BRIDGE_NAME].postEvent === 'function');
+  }
+
+  function isInIframe() {
+    return !!(window.parent && window.parent !== window);
+  }
+
+  function sendEvent(eventName, payload) {
+    var message = {
+      type: eventName,
+      payload: payload || {},
+      timestamp: Date.now()
+    };
+
+    if (hasIOSBridge()) {
+      try {
+        window.webkit.messageHandlers[HANDLER_NAME].postMessage(message);
+      } catch (e) { /* ignore */ }
+      return;
+    }
+
+    if (hasAndroidBridge()) {
+    try {
+      var p = payload || {};
+      p.__secureToken = window.__fbAndroidBridgeAuthToken || '';
+      p.timestamp = message.timestamp;
+      window[ANDROID_BRIDGE_NAME].postEvent(
+        eventName,
+        JSON.stringify(p)
+      );
+    } catch (e) { /* ignore */ }
+    return;
+  }
+
+    if (isInIframe()) {
+      try {
+        window.parent.postMessage(message, '*');
+      } catch (e) { /* ignore */ }
+      return;
+    }
+  }
+
+  // --- rAF Game-Ready Detection ---
+
+  function onFrame() {
+    if (gameReadySent) return;
+
+    frameCount++;
+    if (frameCount >= RAF_FRAME_THRESHOLD) {
+      gameReadySent = true;
+      sendEvent('game_ready', {
+        frame_count: frameCount,
+        detected_at: Date.now()
+      });
+      return;
+    }
+
+    originalRAF.call(window, onFrame);
+  }
+
+  if (originalRAF) {
+    window.requestAnimationFrame = function(callback) {
+      if (!gameReadySent) {
+        return originalRAF.call(window, function(timestamp) {
+          frameCount++;
+          if (frameCount >= RAF_FRAME_THRESHOLD && !gameReadySent) {
+            gameReadySent = true;
+            sendEvent('game_ready', {
+              frame_count: frameCount,
+              detected_at: Date.now()
+            });
+          }
+          callback(timestamp);
+        });
+      }
+      return originalRAF.call(window, callback);
+    };
+  }
+
+  // --- First User Interaction Detection ---
+
+  function setupFirstInteractionDetection() {
+    var events = ['touchstart', 'mousedown', 'keydown'];
+
+    function onFirstInteraction() {
+      if (firstInteractionSent) return;
+      firstInteractionSent = true;
+      sendEvent('user_interaction_start', null);
+
+      for (var i = 0; i < events.length; i++) {
+        document.removeEventListener(events[i], onFirstInteraction, true);
+      }
+    }
+
+    for (var i = 0; i < events.length; i++) {
+      document.addEventListener(events[i], onFirstInteraction, true);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupFirstInteractionDetection);
+  } else {
+    setupFirstInteractionDetection();
+  }
+
+  // --- Auto Error Capture ---
+
+  window.addEventListener('error', function(event) {
+    if (errorSent) return;
+    errorSent = true;
+    sendEvent('error', {
+      message: event.message || 'Unknown error',
+      source: event.filename || '',
+      lineno: event.lineno || 0,
+      colno: event.colno || 0,
+      auto_captured: true
+    });
+  });
+
+  window.addEventListener('unhandledrejection', function(event) {
+    if (errorSent) return;
+    errorSent = true;
+    var reason = event.reason;
+    sendEvent('error', {
+      message: (reason instanceof Error) ? reason.message : String(reason),
+      type: 'unhandled_promise_rejection',
+      auto_captured: true
+    });
+  });
+
+  // --- Public API ---
+
+  window.playablesSDK = {
+    complete: function(score) {
+      sendEvent('game_ended', {
+        score: score,
+        completed: true
+      });
+    },
+
+    error: function(message) {
+      if (errorSent) return;
+      errorSent = true;
+      sendEvent('error', {
+        message: message || 'Unknown error',
+        auto_captured: false
+      });
+    },
+
+    sendEvent: function(eventName, payload) {
+      if (!eventName || typeof eventName !== 'string') return;
+      sendEvent(eventName, payload);
+    }
+  };
+
+  // Kick off rAF detection in case no game code calls rAF immediately
+  if (originalRAF) {
+    originalRAF.call(window, onFrame);
+  }
+})();</script>
+<!-- PLAYABLE_TOUCH_PATCH_V1 --><script>
+(function() {
+  if (window.__playableTouchPatchInstalled) return;
+  window.__playableTouchPatchInstalled = true;
+  var origAdd = EventTarget.prototype.addEventListener;
+  var blockedTypes = { touchstart: 1, touchmove: 1, wheel: 1 };
+  EventTarget.prototype.addEventListener = function(type, listener, options) {
+    if (blockedTypes[type]) {
+      if (options === undefined || options === null) {
+        options = { passive: true };
+      } else if (typeof options === 'boolean') {
+        options = { capture: options, passive: true };
+      } else {
+        options = Object.assign({}, options, { passive: true });
+      }
+    }
+    return origAdd.call(this, type, listener, options);
+  };
+})();
+</script><script>window.Intl=window.Intl||{};Intl.t=function(s){return(Intl._locale&&Intl._locale[s])||s;};</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>Монастыри Святой Горы Афон - Интерактивная карта</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        color: #1a202c;
+        overflow: hidden;
+    }
+
+    #app {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    header {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 1rem 1.25rem;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .title-group h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a365d;
+        margin-bottom: 0.25rem;
+    }
+
+    .title-group p {
+        font-size: 0.875rem;
+        color: #4a5568;
+        line-height: 1.4;
+    }
+
+    .stats {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2c5282;
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 0.25rem;
+    }
+
+    #map {
+        flex: 1;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .leaflet-container {
+        font-family: inherit;
+    }
+
+    .custom-marker {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        width: 32px;
+        height: 32px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        border: 3px solid #fff;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .custom-marker::after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: #fff;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .custom-marker:hover {
+        transform: rotate(-45deg) scale(1.15);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+    }
+
+    .leaflet-popup-content-wrapper {
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .leaflet-popup-content {
+        margin: 0;
+        width: 280px !important;
+    }
+
+    .popup-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 1.25rem;
+    }
+
+    .popup-header h3 {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .popup-header .rank {
+        font-size: 0.75rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .popup-body {
+        padding: 1rem 1.25rem;
+        background: white;
+    }
+
+    .popup-body p {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: #2d3748;
+        margin-bottom: 0.75rem;
+    }
+
+    .popup-footer {
+        padding: 0.75rem 1.25rem;
+        background: #f7fafc;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        color: #718096;
+    }
+
+    .popup-footer svg {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+    }
+
+    .legend {
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 0.875rem 1.25rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        font-size: 0.8125rem;
+    }
+
+    .legend-title {
+        font-weight: 600;
+        color: #1a365d;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #4a5568;
+    }
+
+    .legend-marker {
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        border: 2px solid #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .leaflet-control-zoom {
+        border: none !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .leaflet-control-zoom a {
+        width: 36px !important;
+        height: 36px !important;
+        line-height: 36px !important;
+        border-radius: 8px !important;
+        margin-bottom: 4px;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(10px);
+        color: #2d3748 !important;
+        font-size: 1.25rem !important;
+        font-weight: 600;
+        border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .leaflet-control-zoom a:hover {
+        background: #667eea !important;
+        color: white !important;
+    }
+
+    @media (max-width: 640px) {
+        header {
+            padding: 0.875rem 1rem;
+        }
+
+        .title-group h1 {
+            font-size: 1.25rem;
+        }
+
+        .title-group p {
+            font-size: 0.8125rem;
+        }
+
+        .stats {
+            width: 100%;
+            justify-content: space-around;
+            padding-top: 0.75rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 1.25rem;
+        }
+
+        .leaflet-popup-content {
+            width: 260px !important;
+        }
+
+        .legend {
+            bottom: 1rem;
+            right: 1rem;
+            left: 1rem;
+            padding: 0.75rem 1rem;
+        }
+
+        .leaflet-control-zoom {
+            margin-right: 0.75rem !important;
+            margin-top: 0.75rem !important;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .title-group h1 {
+            font-size: 1.125rem;
+        }
+
+        .leaflet-popup-content {
+            width: 240px !important;
+        }
+
+        .popup-header h3 {
+            font-size: 1rem;
+        }
+    }
+</style>
+</head>
+<body class="">
+<div id="app">
+    <header>
+        <div class="header-content">
+            <div class="title-group">
+                <h1>Монастыри горы Афон</h1>
+                <p>Исследуйте 20 суверенных монастырей Святой Горы</p>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Монастырей</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Лет истории</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div id="map" class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative; outline-style: none;"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(-19.5px, -21.0671px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 19; transform: translate3d(63px, 64px, 0px) scale(1);"><img alt="" src="https://a.tile.openstreetmap.org/10/580/386.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-96px, 41px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/10/581/386.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(160px, 41px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/10/580/385.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-96px, -215px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/10/581/385.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(160px, -215px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/10/580/387.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-96px, 297px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/10/581/387.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(160px, 297px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-marker-pane"><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(314px, 368px, 0px); z-index: 368;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(189px, 232px, 0px); z-index: 232;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(244px, 297px, 0px); z-index: 297;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(122px, 206px, 0px); z-index: 206;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(235px, 372px, 0px); z-index: 372;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(215px, 291px, 0px); z-index: 291;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(230px, 261px, 0px); z-index: 261;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(195px, 312px, 0px); z-index: 312;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(165px, 242px, 0px); z-index: 242;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(165px, 279px, 0px); z-index: 279;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(260px, 318px, 0px); z-index: 318;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(247px, 316px, 0px); z-index: 316;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(214px, 351px, 0px); z-index: 351;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(244px, 378px, 0px); z-index: 378;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(239px, 276px, 0px); z-index: 276;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(175px, 303px, 0px); z-index: 303;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(221px, 360px, 0px); z-index: 360;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(136px, 197px, 0px); z-index: 197;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(182px, 305px, 0px); z-index: 305;"><div class="custom-marker"></div></div><div class="leaflet-marker-icon custom-marker-wrapper leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(160px, 259px, 0px); z-index: 259;"><div class="custom-marker"></div></div></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(148712px, 99011.6px, 0px) scale(512);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="https://leafletjs.com" title="A JavaScript library for interactive maps"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" class="leaflet-attribution-flag"><path fill="#4C7BE1" d="M0 0h12v4H0z"></path><path fill="#FFD500" d="M0 4h12v3H0z"></path><path fill="#E0BC00" d="M0 7h12v1H0z"></path></svg> Leaflet</a> <span aria-hidden="true">|</span> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> участники</div></div></div></div>
+    
+    <div class="legend">
+        <div class="legend-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+            </svg>
+            Легенда
+        </div>
+        <div class="legend-item">
+            <div class="legend-marker"></div>
+            <span>Православный монастырь</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Инициализация карты с центром на Афоне
+    const map = L.map('map', {
+        center: [40.1553, 24.3280],
+        zoom: 11,
+        zoomControl: true,
+        scrollWheelZoom: true,
+        touchZoom: true,
+        doubleClickZoom: true
+    });
+
+    // Добавляем тайлы OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> участники'
+    }).addTo(map);
+
+    // Данные монастырей с координатами и описаниями
+    const monasteries = [
+        {
+            name: "Великая Лавра",
+            rank: 1,
+            coords: [40.1711, 24.3833],
+            desc: "Старейший и первый монастырь на Афоне, основан в 963 году преподобным Афанасием Афонским. Занимает первое место в афонской иерархии."
+        },
+        {
+            name: "Ватопед",
+            rank: 2,
+            coords: [40.3144, 24.2111],
+            desc: "Основан в конце X века. Славится своими сокровищами, включая Пояс Пресвятой Богородицы и обширную коллекцию рукописей."
+        },
+        {
+            name: "Иверский монастырь",
+            rank: 3,
+            coords: [40.2464, 24.2872],
+            desc: "Основан грузинскими монахами в 980 году. Здесь хранится знаменитая икона Божией Матери Иверская (Вратарница). Занимает третье место в иерархии."
+        },
+        {
+            name: "Хиландар",
+            rank: 4,
+            coords: [40.3408, 24.1194],
+            desc: "Сербский монастырь, основанный в 1198 году святым Саввой Сербским и его отцом Стефаном Неманей. Центр сербской православной культуры."
+        },
+        {
+            name: "Дионисиат",
+            rank: 5,
+            coords: [40.1678, 24.2739],
+            desc: "Построен в XIV веке на отвесной скале над морем. Известен чудотворной иконой святого Иоанна Предтечи и крепостной архитектурой."
+        },
+        {
+            name: "Кутлумуш",
+            rank: 6,
+            coords: [40.2528, 24.2472],
+            desc: "Расположен близ Кареи, основан в XII веке. Славится прекрасными фресками и обширной библиотекой рукописей."
+        },
+        {
+            name: "Пантократор",
+            rank: 7,
+            coords: [40.2836, 24.2669],
+            desc: "Посвящен Христу Пантократору, основан в 1363 году. Расположен на северо-восточном побережье с великолепным видом на Эгейское море."
+        },
+        {
+            name: "Ксиропотам",
+            rank: 8,
+            coords: [40.2300, 24.2197],
+            desc: "Один из древнейших монастырей, основан в X веке. Хранит большой фрагмент Животворящего Креста Господня и мощи Сорока мучеников."
+        },
+        {
+            name: "Зограф",
+            rank: 9,
+            coords: [40.3036, 24.1783],
+            desc: "Болгарский монастырь, основан в X веке тремя братьями. Назван в честь святого Георгия, чья икона чудом сама написалась на доске."
+        },
+        {
+            name: "Дохиар",
+            rank: 10,
+            coords: [40.2647, 24.1775],
+            desc: "Основан в X веке на западном побережье. Знаменит иконой Божией Матери Скоропослушницы, известной быстрым исполнением молитв."
+        },
+        {
+            name: "Каракал",
+            rank: 11,
+            coords: [40.2236, 24.3089],
+            desc: "Основан в XI веке, расположен между Великой Лаврой и Иверским. Известен своей башней и оборонительными укреплениями."
+        },
+        {
+            name: "Филофей",
+            rank: 12,
+            coords: [40.2258, 24.2908],
+            desc: "Основан в X веке преподобным Филофеем. Хранит чудотворную икону Божией Матери Сладкое Лобзание и ценные византийские реликвии."
+        },
+        {
+            name: "Симонопетра",
+            rank: 13,
+            coords: [40.1897, 24.2458],
+            desc: "Живописно расположен на 330-метровой скале, построен в XIII веке. Назван «Скалой Симона» в честь основателя — преподобного Симона Мироточивого."
+        },
+        {
+            name: "Святого Павла",
+            rank: 14,
+            coords: [40.1608, 24.2872],
+            desc: "Основан в X веке, посвящен святому апостолу Павлу. Хранит драгоценные реликвии, включая дары волхвов Младенцу Христу."
+        },
+        {
+            name: "Ставроникита",
+            rank: 15,
+            coords: [40.2678, 24.2797],
+            desc: "Самый маленький монастырь, основан в X веке. Знаменит мозаичной иконой святителя Николая, обретенной рыбаками в море."
+        },
+        {
+            name: "Ксенофонт",
+            rank: 16,
+            coords: [40.2400, 24.1919],
+            desc: "Основан в 998 году, расположен на западном побережье у моря. Известен двумя главными храмами и иконой святого Георгия Победоносца."
+        },
+        {
+            name: "Григориат",
+            rank: 17,
+            coords: [40.1794, 24.2553],
+            desc: "Построен в XIV веке на скалистом мысе. Славится коллекцией рукописей и торжественными богослужениями с византийским пением."
+        },
+        {
+            name: "Эсфигмен",
+            rank: 18,
+            coords: [40.3508, 24.1383],
+            desc: "Основан в X веке на северной оконечности Афона. Традиционно строгий устав, известен иконой Благовещения и древними фресками."
+        },
+        {
+            name: "Святого Пантелеимона",
+            rank: 19,
+            coords: [40.2381, 24.2017],
+            desc: "Русский монастырь, также называемый Россикон. Перестроен в XVIII-XIX веках, отличается характерной архитектурой с зелеными куполами."
+        },
+        {
+            name: "Констамонит",
+            rank: 20,
+            coords: [40.2861, 24.1714],
+            desc: "Последний в иерархии монастырь, основан в XI веке. Расположен в лесистой долине в глубине полуострова, посвящен святому Стефану."
+        }
+    ];
+
+    // Создаем кастомную иконку
+    const monasteryIcon = L.divIcon({
+        className: 'custom-marker-wrapper',
+        html: '<div class="custom-marker"></div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+    });
+
+    // Добавляем маркеры для каждого монастыря
+    monasteries.forEach(monastery => {
+        const marker = L.marker(monastery.coords, { 
+            icon: monasteryIcon,
+            alt: monastery.name
+        }).addTo(map);
+
+        const popupContent = `
+            <div class="popup-header">
+                <h3>${monastery.name}</h3>
+                <div class="rank">Место №${monastery.rank} в иерархии</div>
+            </div>
+            <div class="popup-body">
+                <p>${monastery.desc}</p>
+            </div>
+            <div class="popup-footer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>${monastery.coords[0].toFixed(4)}° с.ш., ${monastery.coords[1].toFixed(4)}° в.д.</span>
+            </div>
+        `;
+
+        marker.bindPopup(popupContent, {
+            maxWidth: 300,
+            closeButton: true,
+            autoClose: true,
+            closeOnClick: true
+        });
+    });
+
+    // Подгоняем границы карты чтобы показать все монастыри
+    const bounds = L.latLngBounds(monasteries.map(m => m.coords));
+    map.fitBounds(bounds, { padding: [50, 50] });
+
+    // Корректный рендер карты на мобильных после загрузки
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 100);
+</script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+
+</body></html>
