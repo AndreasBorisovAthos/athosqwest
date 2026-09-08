@@ -96,25 +96,56 @@
         </div>
     </div>
 </section>. 
-                <!-- Карта монастырей Афона -->
-            <section class="mt-8 mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6 text-center">
-                    Карта монастырей <span class="gradient-text">Святой Горы Афон</span>
-                </h2>
-                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
-                    <iframe 
-                        src="athosqwest/athos-map-ru.html" 
-                        width="100%" 
-                        height="600px" 
-                        style="border:none;"
-                        loading="lazy"
-                        title="Интерактивная карта монастырей Афона">
-                    </iframe>
-                </div>
-                <p class="text-sm text-slate-500 text-center mt-4">
-                    Нажмите на маркер монастыря для просмотра информации
-                </p>
-            </section>
+             <!-- Карта монастырей Афона - ВСТРОЕННАЯ -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<section class="mt-8 mb-12">
+  <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6 text-center">
+    Карта монастырей <span class="gradient-text">Святой Горы Афон</span>
+  </h2>
+  <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+    <div id="athos-map" style="width:100%;height:600px;z-index:1"></div>
+  </div>
+  <p class="text-sm text-slate-500 text-center mt-4">
+    Нажмите на маркер монастыря для просмотра информации
+  </p>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var map = L.map('athos-map').setView([40.255, 24.26], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Leaflet | © OSM'
+  }).addTo(map);
+  map.attributionControl.setPrefix('Leaflet');
+
+  var data = [
+    ["Великая Лавра",40.1713,24.3816,"963 г. - главный монастырь Афона"],
+    ["Ватопед",40.3142,24.2111,"Пояс Богородицы"],
+    ["Иверский",40.2436,24.2822,"Вратарница"],
+    ["Хиландар Сербский",40.343,24.1225,"Троеручица"],
+    ["Дионисиат",40.2957,24.2775,"Десница Иоанна"],
+    ["Кутлумуш",40.2558,24.2472,"Страшное Предстательство"],
+    ["Пантократор",40.2834,24.2661,"Геронтисса"],
+    ["Ксиропотам",40.2283,24.2214,"Частица Креста"],
+    ["Зограф Болгарский",40.305,24.1598,"Св. Георгий"],
+    ["Дохиар",40.2675,24.1742,"Скоропослушница"],
+    ["Каракал",40.2236,24.3077,"Варфоломей"],
+    ["Филофей",40.2253,24.2899,"Сладкое Лобзание"],
+    ["Симонопетра",40.1895,24.2467,"250м над морем"],
+    ["Св. Павла",40.1603,24.2875,"Дары Волхвов"],
+    ["Ставроникита",40.2677,24.2769,"Св. Николая"],
+    ["Ксенофонт",40.2493,24.1957,"Одигитрия"],
+    ["Григориат",40.1805,24.2557,"Анастасии"],
+    ["Эсфигмен",40.3535,24.1353,"Вознесения"],
+    ["Пантелеимонов Русский",40.2386,24.2015,"Глава Пантелеимона"],
+    ["Констамонит",40.2869,24.1718,"8 чудотворных икон"]
+  ];
+  data.forEach(function(m){
+    var mk = L.marker([m[1],m[2]]).addTo(map);
+    mk.bindPopup('<b>'+m[0]+'</b><br>'+m[3]+'<br><a href="https://wa.me/306944476923?text='+encodeURIComponent(m[0])+'" target="_blank" style="color:#1e40af;font-weight:600">Оформить визу →</a>');
+  });
+});
+</script>
 
 <section id="visa" class="py-12 bg-white">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
