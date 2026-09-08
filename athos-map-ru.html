@@ -19,7 +19,7 @@ html,body{margin:0;padding:0;height:100%}
 <script>
 document.addEventListener('DOMContentLoaded',function(){
 var map=L.map('map',{scrollWheelZoom:false, attributionControl:false}).setView([40.253,24.24],11);
-L.control.attribution({prefix:'<a href="https://leafletjs.com">Leaflet</a> | © OSM | Andreas Borisov'}).addTo(map);
+L.control.attribution({prefix:'Leaflet | © OSM | Andreas Borisov'})
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM | Andreas Borisov',maxZoom:18}).addTo(map);
 var monasteries=[
 {name:"Великая Лавра",year:"963 г.",lat:40.2215,lng:24.3778,relic:"Мощи Св. Афанасия"},
