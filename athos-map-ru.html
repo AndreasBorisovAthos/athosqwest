@@ -7,49 +7,51 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 html,body{margin:0;padding:0;height:100%}
-#map{width:100%;height:100vh}
-.popup-title{font-weight:700;font-size:16px}
-.popup-year{font-size:12px;color:#64748b;margin-bottom:8px}
-.popup-relic{font-size:13px;margin-bottom:12px}
-.popup-btn{display:block;background:#1e40af;color:#fff;text-align:center;padding:9px 12px;border-radius:8px;text-decoration:none;font-weight:600}
+#map{width:100%;height:600px}
+.popup-title{font-weight:700;font-size:15px}
+.popup-year{font-size:12px;color:#64748b;margin-bottom:6px}
+.popup-relic{font-size:13px;margin-bottom:10px}
+.popup-btn{display:block;background:#1e40af;color:#fff;text-align:center;padding:8px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px}
 </style>
 </head>
 <body>
 <div id="map"></div>
 <script>
-document.addEventListener('DOMContentLoaded',function(){
-var map=L.map('map',{scrollWheelZoom:false, attributionControl:false}).setView([40.253,24.24],11);
-L.control.attribution:false
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM | Andreas Borisov',maxZoom:18}).addTo(map);
+var map = L.map('map').setView([40.255, 24.26], 11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution: 'Leaflet | © OSM | Andreas Borisov'
+}).addTo(map);
+map.attributionControl.setPrefix('Leaflet');
+
 var monasteries=[
-{name:"Великая Лавра",year:"963 г.",lat:40.1713,lng:24.3816,relic:"Мощи Св. Афанасия"},
-{name:"Ватопед",year:"972 г.",lat:40.313,lng:24.209,relic:"Пояс Богородицы, 7 икон"},
-{name:"Иверский",year:"976 г.",lat:40.244,lng:24.281,relic:"Иверская Вратарница"},
-{name:"Хиландар",year:"1198 г.",lat:40.344,lng:24.119,relic:"Троеручица"},
-{name:"Дионисиат",year:"1374 г.",lat:40.295,lng:24.276,relic:"Десница Иоанна Крестителя"},
-{name:"Кутлумуш",year:"XII век",lat:40.256,lng:24.247,relic:"Икона Страшное Предстательство"},
-{name:"Пантократор",year:"1363 г.",lat:40.283,lng:24.266,relic:"Икона Геронтисса"},
-{name:"Ксиропотам",year:"X век",lat:40.228,lng:24.212,relic:"Частица Креста"},
-{name:"Зограф",year:"980 г.",lat:40.304,lng:24.158,relic:"Икона Св. Георгия"},
-{name:"Дохиар",year:"XI век",lat:40.267,lng:24.173,relic:"Скоропослушница"},
-{name:"Каракал",year:"XI век",lat:40.223,lng:24.305,relic:"Мощи Варфоломея"},
-{name:"Филофей",year:"992 г.",lat:40.225,lng:24.29,relic:"Сладкое Лобзание"},
-{name:"Симонопетра",year:"1257 г.",lat:40.193,lng:24.244,relic:"Десница Марии Магдалины"},
-{name:"Св. Павла",year:"XI век",lat:40.159,lng:24.289,relic:"Дары Волхвов"},
-{name:"Ставроникита",year:"X век",lat:40.267,lng:24.276,relic:"Икона Св. Николая"},
-{name:"Ксенофонт",year:"XI век",lat:40.247,lng:24.195,relic:"Одигитрия"},
-{name:"Григориат",year:"1310 г.",lat:40.177,lng:24.254,relic:"Мощи Анастасии"},
-{name:"Эсфигмен",year:"X век",lat:40.355,lng:24.14,relic:"Икона Вознесения"},
-{name:"Пантелеимонов Русский",year:"XIII век",lat:40.235,lng:24.205,relic:"Глава Пантелеимона"},
-{name:"Констамонит",year:"XI век",lat:40.285,lng:24.173,relic:"Одигитрия"}
+["Великая Лавра",963,40.1713,24.3816,"Мощи Св. Афанасия"],
+["Ватопед",972,40.3142,24.2111,"Пояс Богородицы"],
+["Иверский",976,40.2436,24.2822,"Вратарница"],
+["Хиландар",1198,40.343,24.1225,"Троеручица"],
+["Дионисиат",1374,40.2957,24.2775,"Десница Иоанна"],
+["Кутлумуш",1100,40.2558,24.2472,"Страшное Предстательство"],
+["Пантократор",1363,40.2834,24.2661,"Геронтисса"],
+["Ксиропотам",1000,40.2283,24.2214,"Частица Креста"],
+["Зограф",980,40.305,24.1598,"Св. Георгий"],
+["Дохиар",1100,40.2675,24.1742,"Скоропослушница"],
+["Каракал",1100,40.2236,24.3077,"Варфоломей"],
+["Филофей",992,40.2253,24.2899,"Сладкое Лобзание"],
+["Симонопетра",1257,40.1895,24.2467,"Марии Магдалины"],
+["Св. Павла",1100,40.1603,24.2875,"Дары Волхвов"],
+["Ставроникита",1000,40.2677,24.2769,"Св. Николая"],
+["Ксенофонт",1100,40.2493,24.1957,"Одигитрия"],
+["Григориат",1310,40.1805,24.2557,"Анастасии"],
+["Эсфигмен",1000,40.3535,24.1353,"Вознесения"],
+["Пантелеимонов Русский",1200,40.2386,24.2015,"Глава Пантелеимона"],
+["Констамонит",1100,40.2869,24.1718,"Одигитрия"]
 ];
-monasteries.forEach(function(m){
-var marker=L.marker([m.lat,m.lng]).addTo(map);
-var html='<div><div class="popup-title">'+m.name+'</div><div class="popup-year">'+m.year+'</div><div class="popup-relic">'+m.relic+'</div><a class="popup-btn" href="https://wa.me/306944476923?text=Монастырь '+encodeURIComponent(m.name)+'" target="_blank">Оформить визу</a></div>';
-marker.bindPopup(html,{maxWidth:300,minWidth:250});
-});
-setTimeout(function(){map.invalidateSize()},500);
-});
+
+for(var i=0;i<monasteries.length;i++){
+  var m=monasteries[i];
+  var marker=L.marker([m[2],m[3]]).addTo(map);
+  var html='<div><div class="popup-title">'+m[0]+'</div><div class="popup-year">'+m[1]+' г.</div><div class="popup-relic">'+m[4]+'</div><a class="popup-btn" href="https://wa.me/306944476923?text='+encodeURIComponent(m[0])+'" target="_blank">Оформить визу</a></div>';
+  marker.bindPopup(html);
+}
 </script>
 </body>
 </html>
