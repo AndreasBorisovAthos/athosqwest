@@ -7,5 +7,5 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-Sitemap: https://andreasborisovathos.github.io/athosqwest/sitemap.xml
-Host: https://andreasborisovathos.github.io/athosqwest/
+Sitemap: https://www.athos-guide.com/sitemap.xml
+Host: https://www.athos-guide.com
