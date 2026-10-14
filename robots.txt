@@ -3,9 +3,9 @@ Allow: /
 
 User-agent: Yandex
 Allow: /
+Host: athos-guide.com
 
 User-agent: Googlebot
 Allow: /
 
-Sitemap: https://www.athos-guide.com/sitemap.xml
-Host: https://www.athos-guide.com
+Sitemap: https://athos-guide.com/sitemap.xml
