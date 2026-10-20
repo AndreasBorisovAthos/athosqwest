@@ -58,41 +58,48 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
 
-<header class="fixed w-full bg-white/80 backdrop-blur-lg z-50 border-b border-slate-200/50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center">
-                    <i class="fa-solid fa-mountain-sun text-white text-lg"></i>
-                </div>
-                <div>
-                    <p class="font-semibold text-slate-900 leading-tight">Andreas Borisov</p>
-                    <p class="text-xs text-slate-500 leading-tight">athos-guide.com</p>
-                </div>
-            </div>
-         <nav style="background:#fff; padding:10px; text-align:center; font-weight:bold;">
-<a href="/">Главная</a> | 
-<a href="/jeep-tour/">Джип-тур от 620€</a> | 
-<a href="/programma/">Программы</a> | 
-<a href="/diamonitirion/">Диамонитирион</a> | 
-<a href="/shengen-visa/">Шенген без отказа</a> | 
-<a href="/posle-afona/">После Афона</a> | 
-<a href="https://youtube.com/@athos-guide?si=4UrAz3DbbQhlM-1c" target="_blank">YouTube</a>
-</nav>
-            <button id="mobile-menu-btn" class="md:hidden text-slate-600">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
-        </div>
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100">
-        <div class="px-4 py-3 space-y-3">
-            <a href="#about" class="block text-sm font-medium text-slate-600">О гиде</a>
-            <a href="#services" class="block text-sm font-medium text-slate-600">Услуги</a>
-            <a href="#visa" class="block text-sm font-medium text-slate-600">Виза</a>
-            <a href="#contact" class="block text-sm font-medium text-blue-600">Связаться</a>
-        </div>
-    </div>
-</div></header>
+<!-- HEADER FIX - MOBILE -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+<div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+  <!-- Лого -->
+  <a href="/" class="flex items-center gap-2">
+    <img src="/favicon.png" alt="logo" class="w-8 h-8 rounded-full">
+    <span class="leading-tight"><strong class="block text-sm text-slate-900">Andreas Borisov</strong><span class="text-xs text-slate-500">athos-guide.com</span></span>
+  </a>
+  
+  <!-- Десктоп меню -->
+  <nav class="hidden md:flex gap-5 text-sm font-medium text-slate-700">
+    <a href="/programma/" class="hover:text-blue-600">Программы</a>
+    <a href="/diamonitirion/" class="hover:text-blue-600">Диамонитирион</a>
+    <a href="/shengen-visa/" class="hover:text-blue-600">Шенген без отказа</a>
+    <a href="/posle-afona/" class="hover:text-blue-600">После Афона</a>
+    <a href="/jeep-tour/" class="hover:text-blue-600">Джип-тур</a>
+    <a href="https://www.youtube.com/@AthosGuide" target="_blank" class="text-red-600 hover:text-red-700"><i class="fa-brands fa-youtube mr-1"></i>YouTube</a>
+  </nav>
 
+  <!-- Бургер мобилка -->
+  <button id="menuBtn" class="md:hidden p-2 text-slate-700 text-xl"><i class="fa-solid fa-bars"></i></button>
+</div>
+
+<!-- Мобильное выпадающее меню -->
+<div id="mobileMenu" class="hidden md:hidden bg-white border-t absolute w-full left-0 shadow-lg">
+  <div class="flex flex-col p-4 gap-3 text-sm font-medium">
+    <a href="/programma/" class="py-2 border-b">Программы</a>
+    <a href="/diamonitirion/" class="py-2 border-b">Диамонитирион</a>
+    <a href="/shengen-visa/" class="py-2 border-b">Шенген без отказа</a>
+    <a href="/posle-afona/" class="py-2 border-b">После Афона</a>
+    <a href="/jeep-tour/" class="py-2 border-b">Джип-тур по Афону</a>
+    <a href="https://www.youtube.com/@AthosGuide" target="_blank" class="py-2 text-red-600"><i class="fa-brands fa-youtube mr-1"></i>YouTube</a>
+    <a href="https://wa.me/306944476923" target="_blank" class="mt-2 bg-green-500 text-white text-center py-3 rounded-xl font-bold"><i class="fa-brands fa-whatsapp mr-2"></i>WhatsApp +30 694 447 6923</a>
+  </div>
+</div>
+</header>
+
+<script>
+document.getElementById('menuBtn').onclick = function() {
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+}
+</script>
 <section class="hero-bg pt-32 pb-20 lg:pt-40 lg:pb-28">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl">
