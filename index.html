@@ -312,33 +312,74 @@ document.addEventListener('DOMContentLoaded', function() {
             <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 mb-4">Чем я могу помочь</h2>
             <p class="text-slate-600">Индивидуальный подход к каждому паломнику. Полное сопровождение от визы до возвращения домой.</p>
         </div>
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="card-hover bg-slate-50 rounded-2xl p-8 border border-slate-200">
-                <div class="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center mb-6 p-2.5">
-    <img src="prado-icon.png" alt="Джип Prado" class="w-full h-full object-contain">
+       <div class="grid md:grid-cols-2 gap-8">
+  
+  <!-- 1. ШЕНГЕН -->
+  <div class="card-hover bg-slate-50 rounded-2xl p-8 border border-slate-200 flex flex-col">
+    <div class="flex-1">
+      <h3 class="text-2xl font-bold text-slate-900 mb-4">🛂 Шенген без отказа с 1995 года</h3>
+      <p class="text-slate-600 mb-6 leading-relaxed">Почему клирики получают отказ и как я делаю 0 отказов для паломников на Афон. Помощь в оформлении.</p>
+    </div>
+    <a href="https://wa.me/306944476923?text=Здравствуйте!%20Нужна%20помощь%20с%20шенгеном%20на%20Афон" target="_blank" class="mt-4 inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl">
+      <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> Заказать услугу
+    </a>
+  </div>
+
+  <!-- 2. ДИАМОНИТИРИОН -->
+  <div class="card-hover bg-slate-50 rounded-2xl p-8 border border-slate-200 flex flex-col">
+    <div class="flex-1">
+      <h3 class="text-2xl font-bold text-slate-900 mb-4">📜 Диамонитирион 2026</h3>
+      <p class="text-slate-600 mb-6 leading-relaxed">Ограничения по паспортам кроме РФ и Украины. Помогу получить разрешение для въезда на Святую Гору.</p>
+    </div>
+    <a href="https://wa.me/306944476923?text=Здравствуйте!%20Нужна%20помощь%20с%20диамонитирион" target="_blank" class="mt-4 inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl">
+      <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> Заказать услугу
+    </a>
+  </div>
+
+  <!-- 3. ДЖИП-ТУР -->
+  <div class="card-hover bg-slate-50 rounded-2xl p-8 border border-slate-200 flex flex-col">
+    <div class="flex-1">
+      <div class="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center mb-6">
+        <img src="prado-icon.png" alt="Джип Prado" class="w-full h-full object-contain">
+      </div>
+      <h3 class="text-2xl font-bold text-slate-900 mb-4">Джип-туры по Афону с рассказом</h3>
+      <p class="text-slate-600 mb-6 leading-relaxed">Комфортные поездки на внедорожнике 【entity-Toyota¦canonical_name=Toyota】 Land Cruiser Prado по территории Святой Горы.</p>
+      <ul class="space-y-3 mb-6">
+        <li class="flex items-center gap-3 text-slate-700"><i class="fa-solid fa-check text-green-500"></i> Индивидуальные маршруты 1-3 дня</li>
+        <li class="flex items-center gap-3 text-slate-700"><i class="fa-solid fa-check text-green-500"></i> Разрешение на въезд включено</li>
+        <li class="flex items-center gap-3 text-slate-700"><i class="fa-solid fa-check text-green-500"></i> Ночлег в монастырях</li>
+      </ul>
+    </div>
+    <a href="https://wa.me/306944476923?text=Здравствуйте!%20Хочу%20заказать%20джип-тур%20по%20Афону" target="_blank" class="mt-4 inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl">
+      <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> Заказать джип-тур
+    </a>
+  </div>
+
+  <!-- 4. ПРОГРАММЫ -->
+  <div class="card-hover bg-slate-50 rounded-2xl p-8 border border-slate-200 flex flex-col">
+    <div class="flex-1">
+      <h3 class="text-2xl font-bold text-slate-900 mb-4">📅 Программы 1-2 дня</h3>
+      <p class="text-slate-600 mb-6 leading-relaxed">Однодневная и двухдневная программа поездки на Афон. Смотрите видео маршрута на канале.</p>
+      <a href="https://youtube.com/@athos-guide?si=4UrAz3DbbQhlM-1c" target="_blank" class="text-red-600 font-bold mb-4 inline-block">▶️ YouTube @athos-guide</a>
+    </div>
+    <div class="flex gap-3 mt-4">
+      <a href="/programma.html" class="flex-1 text-center bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-xl">Программа</a>
+      <a href="https://wa.me/306944476923?text=Здравствуйте!%20Интересует%20программа%20поездки%20на%20Афон" target="_blank" class="flex-1 text-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl">Заказать</a>
+    </div>
+  </div>
+
+  <!-- 5. ПОСЛЕ АФОНА - ПОСЛЕДНЯЯ НА ВСЮ ШИРИНУ -->
+  <div class="card-hover bg-slate-50 rounded-2xl p-8 border border-slate-200 md:col-span-2 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <div class="flex-1">
+      <h3 class="text-2xl font-bold text-slate-900 mb-4">⛰️ После Афона: Метеоры, Корфу, Патмос</h3>
+      <p class="text-slate-600 leading-relaxed">С моим сопровождением посетите Метеоры, остров Корфу, Пещеру Апокалипсиса на Патмосе и другие святые места Греции. Организую маршрут и ночлег.</p>
+    </div>
+    <a href="https://wa.me/306944476923?text=Здравствуйте!%20Интересует%20поездка%20после%20Афона%20-%20Метеоры,%20Корфу,%20Патмос" target="_blank" class="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-xl whitespace-nowrap">
+      <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> Заказать услугу
+    </a>
+  </div>
+
 </div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-4">Джип-туры по Афону с рассказами</h3>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    Комфортные поездки на внедорожнике Toyota Land Cruiser Prado по территории Святой Горы. Посещение главных Святынь Православного Мира хранящихся в Скитах и Монастырях Афона.
-                </p>
-                <ul class="space-y-3 mb-8">
-                    <li class="flex items-center gap-3 text-slate-700">
-                        <i class="fa-solid fa-check text-green-600"></i>
-                        Индивидуальные маршруты 1-3 дня
-                    </li>
-                    <li class="flex items-center gap-3 text-slate-700">
-                        <i class="fa-solid fa-check text-green-600"></i>
-                        Разрешение на въезд включено
-                    </li>
-                    <li class="flex items-center gap-3 text-slate-700">
-                        <i class="fa-solid fa-check text-green-600"></i>
-                        Ночлег в монастырях
-                    </li>
-                </ul>
-                <a href="https://wa.me/306944476923" target="_blank" class="btn-primary text-white font-semibold px-6 py-3 rounded-xl inline-block">
-                    Заказать джип-тур
-                </a>
-            </div>
             
             <div class="card-hover bg-slate-50 rounded-2xl p-8 border border-slate-200">
                 <div class="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center mb-6">
