@@ -69,13 +69,25 @@
   
   <!-- Десктоп меню -->
   <nav class="hidden md:flex gap-5 text-sm font-medium text-slate-700">
+<nav class="hidden md:flex gap-5 text-sm font-medium text-slate-700 items-center">
     <a href="/programma/" class="hover:text-blue-600">Программы</a>
     <a href="/diamonitirion/" class="hover:text-blue-600">Диамонитирион</a>
     <a href="/shengen-visa/" class="hover:text-blue-600">Шенген без отказа</a>
     <a href="/posle-afona/" class="hover:text-blue-600">После Афона</a>
     <a href="/jeep-tour/" class="hover:text-blue-600">Джип-тур</a>
+    <a href="/#contacts" class="hover:text-blue-600">Контакты</a>
     <a href="https://www.youtube.com/@AthosGuide" target="_blank" class="text-red-600 hover:text-red-700"><i class="fa-brands fa-youtube mr-1"></i>YouTube</a>
-  </nav>
+    
+    <!-- Кнопка Email + Телефон -->
+    <div class="flex items-center gap-2 ml-2 pl-4 border-l border-slate-200">
+      <a href="mailto:info@athos-guide.com" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition">
+        <i class="fa-solid fa-envelope"></i> info@athos-guide.com
+      </a>
+      <a href="tel:+306944476923" class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition" title="+30 694 447 6923">
+        <i class="fa-solid fa-phone text-xs"></i>
+      </a>
+    </div>
+</nav>
 
   <!-- Бургер мобилка -->
   <button id="menuBtn" class="md:hidden p-2 text-slate-700 text-xl"><i class="fa-solid fa-bars"></i></button>
