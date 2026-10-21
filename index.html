@@ -124,14 +124,19 @@
     </div>
 </section>. 
 <script>
-document.getElementById('burgerBtn').addEventListener('click', function(){
-  document.getElementById('mobileMenu').classList.toggle('hidden');
+const btn = document.getElementById('burgerBtn');
+const menu = document.getElementById('mobileMenu');
+btn.addEventListener('click', function(){
+  menu.classList.toggle('hidden');
 });
-
-
-
-
-</script> </body> </html>
+menu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    menu.classList.add('hidden');
+  });
+});
+</script>
+</body>
+</html>
     
 
             <!-- Карта монастырей Афона - ВСТРОЕННАЯ -->
