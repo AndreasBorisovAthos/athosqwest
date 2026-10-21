@@ -18,7 +18,22 @@
 <a href="/" class="text-sm text-slate-300 hover:text-white">← На главную</a>
 </div>
 </header>
-
+<!-- Breadcrumbs SEO -->
+<nav class="bg-slate-50 border-b" aria-label="breadcrumb">
+  <div class="max-w-4xl mx-auto px-4 py-3 text-sm">
+    <ol class="flex gap-2 text-slate-500" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="/" class="hover:text-blue-600 hover:underline"><span itemprop="name">Главная</span></a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li class="text-slate-400">/</li>
+      <li class="text-slate-900 font-bold" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name">Шенгенская виза на Афон</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    </ol>
+  </div>
+</nav>
 <!-- Hero -->
 <section class="py-16 bg-gradient-to-b from-slate-50 to-white">
 <div class="max-w-4xl mx-auto px-4">
