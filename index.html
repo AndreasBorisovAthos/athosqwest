@@ -792,5 +792,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 }
 </script>
 
+</script>
+
+<div style="text-align:center; padding:20px; background:#1e293b; color:#94a3b8; font-size:14px;">
+  Instagram: @athosguide - Гид на Афон с 1995 года
+</div>
+</footer>
+
+<script>
+// бургер - чтобы открывалось меню
+const burgerBtn = document.getElementById('burgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const burgerIcon = document.getElementById('burgerIcon');
+const closeIcon = document.getElementById('closeIcon');
+let menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  if(mobileMenu) mobileMenu.classList.toggle('hidden', !menuOpen);
+  if(burgerIcon) burgerIcon.classList.toggle('hidden', menuOpen);
+  if(closeIcon) closeIcon.classList.toggle('hidden', !menuOpen);
+}
+if(burgerBtn) burgerBtn.addEventListener('click', toggleMenu);
+document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => { if(menuOpen) toggleMenu(); }));
+</script>
+
 </body>
 </html>
