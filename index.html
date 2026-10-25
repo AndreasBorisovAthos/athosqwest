@@ -825,7 +825,7 @@ document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('clic
   </div>
 </section>
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbz9xUiLB96nxIGFsXMfo6_tRG-J2Tb2DmSYIFY_fOdDImqfLBANHTX5uve8Qw-o31bs_g/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycby4wkYXkF2ss-yKavhuqt28zCBXpmyPX5Jsl-UZ95BpUS1O4nXRzXeRd_TsX11-6zwr/exec";
 async function loadLiveReviews(){
   const r = await fetch(API_URL); const data = await r.json();
   let html=""; data.forEach(v=>{ html+=`<div style="background:#fff;padding:15px;border-radius:8px;"><b>${v.name} ${v.rating}★</b> ${v.date||''}<br>${v.text}</div>`; });
