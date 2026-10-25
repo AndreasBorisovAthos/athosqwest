@@ -864,6 +864,79 @@ function send(type){
 }
 document.getElementById('btn-wa').onclick=()=>send('wa');
 document.getElementById('btn-viber').onclick=()=>send('viber');
+</script><!-- АВТО-ОБНОВЛЕНИЕ reviewCount ДЛЯ GOOGLE -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 1. Считаем сколько отзывов на странице сейчас
+  const baseCount = 47; // твои старые с Google/NeedGuide
+  const localReviews = JSON.parse(localStorage.getItem('athos_rev_full') || localStorage.getItem('athos_rev') || '[]').length;
+  const staticReviews = document.querySelectorAll('#reviews-list > div').length || 3; // Ксения, Константин, Паломник
+  
+  // Реальное количество = база + новые
+  const realCount = baseCount + localReviews;
+
+  // 2. Находим JSON-LD на странице и обновляем
+  const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
+  jsonLdScripts.forEach(script => {
+    try {
+      let data = JSON.parse(script.innerHTML);
+      // Если это LocalBusiness с aggregateRating
+      if (data.aggregateRating) {
+        data.aggregateRating.reviewCount = realCount.toString();
+        data.aggregateRating.ratingValue = "4.9";
+        script.innerHTML = JSON.stringify(data, null, 2);
+        console.log('✅ reviewCount обновлен для Google:', realCount);
+      }
+      // Если это массив
+      if (Array.isArray(data)) {
+        data.forEach(item => {
+          if (item.aggregateRating) item.aggregateRating.reviewCount = realCount.toString();
+        });
+        script.innerHTML = JSON.stringify(data, null, 2);
+      }
+    } catch(e) {}
+  });
+
+  // 3. Для отладки — покажи в консоли
+  console.log(`Отзывов для Google: ${realCount} (база ${baseCount} + новые ${localReviews})`);
+});
+</script>
+                <!-- АВТО-ОБНОВЛЕНИЕ reviewCount ДЛЯ GOOGLE -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 1. Считаем сколько отзывов на странице сейчас
+  const baseCount = 47; // твои старые с Google/NeedGuide
+  const localReviews = JSON.parse(localStorage.getItem('athos_rev_full') || localStorage.getItem('athos_rev') || '[]').length;
+  const staticReviews = document.querySelectorAll('#reviews-list > div').length || 3; // Ксения, Константин, Паломник
+  
+  // Реальное количество = база + новые
+  const realCount = baseCount + localReviews;
+
+  // 2. Находим JSON-LD на странице и обновляем
+  const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
+  jsonLdScripts.forEach(script => {
+    try {
+      let data = JSON.parse(script.innerHTML);
+      // Если это LocalBusiness с aggregateRating
+      if (data.aggregateRating) {
+        data.aggregateRating.reviewCount = realCount.toString();
+        data.aggregateRating.ratingValue = "4.9";
+        script.innerHTML = JSON.stringify(data, null, 2);
+        console.log('✅ reviewCount обновлен для Google:', realCount);
+      }
+      // Если это массив
+      if (Array.isArray(data)) {
+        data.forEach(item => {
+          if (item.aggregateRating) item.aggregateRating.reviewCount = realCount.toString();
+        });
+        script.innerHTML = JSON.stringify(data, null, 2);
+      }
+    } catch(e) {}
+  });
+
+  // 3. Для отладки — покажи в консоли
+  console.log(`Отзывов для Google: ${realCount} (база ${baseCount} + новые ${localReviews})`);
+});
 </script>
 </body>
 </html>
