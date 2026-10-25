@@ -813,17 +813,79 @@ if(burgerBtn) burgerBtn.addEventListener('click', toggleMenu);
 document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => { if(menuOpen) toggleMenu(); }));
 </script>
 
-     <section id="reviews-live" style="max-width:1100px;margin:50px auto;padding:30px 20px;background:#fdfbf7;border:1px solid #e8dcc8;border-radius:16px;">
-  <h2 style="text-align:center;font-size:28px;">Отзывы паломников</h2>
-  <div id="reviews-list-live" style="margin-top:20px;display:grid;gap:15px;">Загружаем...</div>
-  <div style="margin-top:30px;padding:20px;background:#fff;border-radius:12px;">
-    <input id="rv-name" placeholder="Ваше имя" style="width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;">
-    <select id="rv-rating" style="width:100%;padding:12px;"><option value="5">5 звезд</option></select>
-    <textarea id="rv-text" placeholder="Ваш отзыв" style="width:100%;height:80px;padding:12px;"></textarea>
-    <button onclick="sendLiveReview()" style="width:100%;background:#0a4a7a;color:#fff;padding:14px;border:none;border-radius:8px;margin-top:10px;cursor:pointer;">Отправить отзыв</button>
-    <p id="rv-status-live"></p>
+     <!-- НАЧАЛО НОВОГО БЛОКА ОТЗЫВОВ С ИКОНОЙ -->
+<section id="reviews-live" style="background:#FDF8EE; padding:40px 0 80px; font-family:'Manrope',system-ui,sans-serif; color:#2B2117">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500&display=swap');
+  #reviews-live .serif{font-family:'Cormorant Garamond',serif}
+  .hero-athos{position:relative; height:520px; overflow:hidden; border-radius:28px; max-width:1100px; margin:0 auto;}
+  .hero-athos img.bg{width:100%; height:100%; object-fit:cover; object-position:50% 22%; transform:scale(1.08)}
+  .hero-athos .blur{position:absolute; inset:0; filter:blur(22px); opacity:.55; transform:scale(1.12); width:100%; height:100%; object-fit:cover}
+  .hero-athos .ov{position:absolute; inset:0; background:rgba(14,31,58,.55); background:linear-gradient(to bottom, rgba(14,31,58,.2), rgba(14,31,58,.75))}
+  .card-athos{background:#FFFBF2; border:1px solid #E8DDC7; border-left:3px solid #D4AF37; border-radius:18px; padding:22px 24px; box-shadow:0 8px 24px rgba(30,58,95,.06)}
+  .btn-athos{background:#1E3A5F; color:#FFFBF2; border-radius:12px; height:48px; padding:0 28px; text-transform:uppercase; letter-spacing:.12em; font-size:13px; font-weight:500; border:0; cursor:pointer; transition:.25s}
+  .btn-athos:hover{background:#D4AF37; color:#1E3A5F}
+  @media(max-width:700px){.hero-athos{border-radius:0; height:460px}}
+</style>
+
+<div class="hero-athos">
+  <img class="bg" src="./virgin.jpg" alt="Пресвятая Богородица над Афоном">
+  <img class="blur" src="./virgin.jpg" alt="" aria-hidden="true">
+  <div class="ov"></div>
+  <div style="position:relative; z-index:2; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:24px">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px"><span style="width:32px; height:1px; background:rgba(212,175,55,.7)"></span><span style="font-size:10px; letter-spacing:.28em; text-transform:uppercase; color:#E8C766">Athos Guide • Святая Гора</span><span style="width:32px; height:1px; background:rgba(212,175,55,.7)"></span></div>
+    <h2 class="serif" style="font-size:60px; line-height:.9; color:#FFFBF2; margin:0; font-weight:500">Отзывы<br><span style="font-style:italic; font-weight:400; color:#F6EEDD">паломников</span></h2>
+    <div style="margin-top:20px; display:flex; gap:12px; align-items:center"><span style="color:#D4AF37">✦</span><p class="serif" style="font-style:italic; font-size:20px; color:#E8DDC7; margin:0">Под покровом Пресвятой Богородицы</p><span style="color:#D4AF37">✦</span></div>
   </div>
+</div>
+
+<div style="max-width:1100px; margin:0 auto; padding:0 24px;">
+  <div id="reviews-list" style="margin-top:28px; display:grid; gap:18px;"><div style="text-align:center; padding:40px; color:#9A8C7C">Загружаем отзывы...</div></div>
+
+  <div style="margin-top:32px; background:white; border:1px solid #E8DDC7; border-radius:22px; overflow:hidden; box-shadow:0 12px 40px rgba(30,58,95,.08)">
+    <div style="padding:22px 28px; border-bottom:1px solid #F6EEDD; display:flex; justify-content:space-between"><div><div style="font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#C9B896">Ваше свидетельство</div><div class="serif" style="font-size:22px">Оставить отзыв</div></div><div style="color:#D4AF37; font-size:11px">✦ благословенно ✦</div></div>
+    <form id="review-form" style="padding:22px 28px; background:#FFFBF2">
+      <div id="form-ok" style="display:none; margin-bottom:14px; background:#F0F6EC; border:1px solid #D6E8CF; color:#3A5A2E; padding:10px 14px; border-radius:10px; font-size:13px">✦ Спаси Господи! Отзыв опубликован.</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px">
+        <div><label style="font-size:11px; text-transform:uppercase; color:#8A7D6E">Имя</label><input id="r-name" required placeholder="Имя, город" style="margin-top:6px; width:100%; height:46px; border-radius:12px; border:1px solid #E8DDC7; padding:0 14px"></div>
+        <div><label style="font-size:11px; text-transform:uppercase; color:#8A7D6E">Оценка</label><select id="r-rating" style="margin-top:6px; width:100%; height:46px; border-radius:12px; border:1px solid #E8DDC7; padding:0 14px"><option value="5">★★★★★ 5 звезд</option><option value="4">★★★★☆ 4</option><option value="3">★★★☆☆ 3</option></select></div>
+      </div>
+      <div style="margin-top:14px"><label style="font-size:11px; text-transform:uppercase; color:#8A7D6E">Отзыв</label><textarea id="r-text" required rows="4" placeholder="Что коснулось сердца на Святой Горе..." style="margin-top:6px; width:100%; border-radius:14px; border:1px solid #E8DDC7; padding:14px"></textarea></div>
+      <div style="margin-top:18px"><button class="btn-athos" type="submit">Оставить отзыв ✦</button></div>
+    </form>
+  </div>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycby4wkYXkF2ss-yKavhuqt28zCBXpmyPX5Jsl-UZ95BpUS1O4nXRzXeRd_TsX11-6zwr/exec";
+const listEl = document.getElementById('reviews-list');
+function stars(n){ n=+n||5; return '<span style="color:#D4AF37; letter-spacing:.15em">'+ '★'.repeat(n) + '<span style="color:#E8DDC7">'+ '★'.repeat(5-n)+'</span></span>'; }
+function esc(s){ return (s||'').replace(/[&<>]/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;' }[m])) }
+async function loadReviews(){
+  try{
+    const r = await fetch(API_URL); const data = await r.json();
+    if(!data.length){ listEl.innerHTML='<div style="text-align:center; padding:24px; color:#8A7D6E">Пока нет отзывов — будьте первым!</div>'; return; }
+    listEl.innerHTML = data.reverse().map(o=>`
+      <div class="card-athos">
+        <div style="display:flex; justify-content:space-between"><div><div style="font-weight:600; font-size:14px">${esc(o.name)}</div><div style="font-size:11px; color:#9A8C7C">${esc(o.date||'')}</div></div><div>${stars(o.rating)}</div></div>
+        <div class="serif" style="margin-top:12px; font-size:14.5px; line-height:1.7">"${esc(o.text)}"</div>
+      </div>`).join('');
+  }catch(e){ listEl.innerHTML='<div style="text-align:center; color:#9A8C7C">Не удалось загрузить</div>'; }
+}
+document.getElementById('review-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const name=document.getElementById('r-name').value.trim();
+  const text=document.getElementById('r-text').value.trim();
+  const rating=document.getElementById('r-rating').value;
+  if(!name||!text) return;
+  const btn=e.target.querySelector('button'); btn.disabled=true; btn.textContent='Отправляем...';
+  try{ await fetch(API_URL, {method:'POST', mode:'no-cors', body: JSON.stringify({name, rating, text})}); document.getElementById('form-ok').style.display='block'; e.target.reset(); setTimeout(loadReviews,800); }catch(err){ alert('Ошибка'); }
+  btn.disabled=false; btn.textContent='Оставить отзыв ✦'; setTimeout(()=>document.getElementById('form-ok').style.display='none',4000);
+});
+loadReviews();
+</script>
 </section>
+<!-- КОНЕЦ НОВОГО БЛОКА -->
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycby4wkYXkF2ss-yKavhuqt28zCBXpmyPX5Jsl-UZ95BpUS1O4nXRzXeRd_TsX11-6zwr/exec";
 async function loadLiveReviews(){
