@@ -813,7 +813,33 @@ if(burgerBtn) burgerBtn.addEventListener('click', toggleMenu);
 document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => { if(menuOpen) toggleMenu(); }));
 </script>
 
-                
+     <section id="reviews-live" style="max-width:1100px;margin:50px auto;padding:30px 20px;background:#fdfbf7;border:1px solid #e8dcc8;border-radius:16px;">
+  <h2 style="text-align:center;font-size:28px;">Отзывы паломников</h2>
+  <div id="reviews-list-live" style="margin-top:20px;display:grid;gap:15px;">Загружаем...</div>
+  <div style="margin-top:30px;padding:20px;background:#fff;border-radius:12px;">
+    <input id="rv-name" placeholder="Ваше имя" style="width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;">
+    <select id="rv-rating" style="width:100%;padding:12px;"><option value="5">5 звезд</option></select>
+    <textarea id="rv-text" placeholder="Ваш отзыв" style="width:100%;height:80px;padding:12px;"></textarea>
+    <button onclick="sendLiveReview()" style="width:100%;background:#0a4a7a;color:#fff;padding:14px;border:none;border-radius:8px;margin-top:10px;cursor:pointer;">Отправить отзыв</button>
+    <p id="rv-status-live"></p>
+  </div>
+</section>
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbz9xUiLB96nxIGFsXMfo6_tRG-J2Tb2DmSYIFY_fOdDImqfLBANHTX5uve8Qw-o31bs_g/exec";
+async function loadLiveReviews(){
+  const r = await fetch(API_URL); const data = await r.json();
+  let html=""; data.forEach(v=>{ html+=`<div style="background:#fff;padding:15px;border-radius:8px;"><b>${v.name} ${v.rating}★</b> ${v.date||''}<br>${v.text}</div>`; });
+  document.getElementById("reviews-list-live").innerHTML = html || 'Пока нет отзывов';
+}
+async function sendLiveReview(){
+  const name=document.getElementById("rv-name").value; const rating=document.getElementById("rv-rating").value; const text=document.getElementById("rv-text").value;
+  if(!name||!text){alert("Заполните");return;}
+  await fetch(API_URL,{method:"POST",mode:"no-cors",body:JSON.stringify({name,rating,text})});
+  document.getElementById("rv-status-live").innerText="Спасибо! Появится через 5 сек";
+  setTimeout(loadLiveReviews,2000);
+}
+loadLiveReviews();
+</script>           
                
 </body>
 </html>
