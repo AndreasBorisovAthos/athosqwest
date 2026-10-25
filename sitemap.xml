@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://athos-guide.com/</loc></url>
-<url><loc>https://athos-guide.com/shengen-visa/</loc></url>
-<url><loc>https://athos-guide.com/diamonitirion/</loc></url>
-<url><loc>https://athos-guide.com/jeep-tour/</loc></url>
-<url><loc>https://athos-guide.com/programma/</loc></url>
-<url><loc>https://athos-guide.com/posle-afona/</loc></url>
-<url><loc>https://athos-guide.com/athos-map-ru.html</loc></url>
+  <url>
+    <loc>https://athos-guide.com/</loc>
+    <lastmod>2026-05-13</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://athos-guide.com/shengen-visa/</loc>
+    <lastmod>2026-05-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://athos-guide.com/diamonitirion/</loc>
+    <lastmod>2026-05-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://athos-guide.com/jeep-tour/</loc>
+    <lastmod>2026-05-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://athos-guide.com/programma/</loc>
+    <lastmod>2026-05-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://athos-guide.com/posle-afona/</loc>
+    <lastmod>2026-05-13</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://athos-guide.com/athos-map-ru.html</loc>
+    <lastmod>2026-05-13</lastmod>
+    <priority>0.6</priority>
+  </url>
 </urlset>
