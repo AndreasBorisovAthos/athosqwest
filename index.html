@@ -864,6 +864,7 @@ function send(type){
 }
 document.getElementById('btn-wa').onclick=()=>send('wa');
 document.getElementById('btn-viber').onclick=()=>send('viber');
+    document.getElementById('btn-clear-test').onclick=()=>{if(confirm('Удалить тестовые отзывы с этого устройства?')){localStorage.removeItem('athos_rev_full');localStorage.removeItem('athos_rev');location.reload();}};
 </script>
                 
                 <!-- АВТО-ОБНОВЛЕНИЕ reviewCount ДЛЯ GOOGLE -->
