@@ -812,60 +812,7 @@ function toggleMenu() {
 if(burgerBtn) burgerBtn.addEventListener('click', toggleMenu);
 document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => { if(menuOpen) toggleMenu(); }));
 </script>
-<section id="otzyvy" style="width:100%; box-sizing:border-box; margin:40px 0; padding:30px 20px; background:#ffffff; border:1px solid #e8e8e8; border-radius:12px;">
 
-  <h2 style="margin:0 0 20px 0; font-size:28px;">Оставить отзыв — появится на главной сразу</h2>
-
-  <div style="display:flex; gap:15px; flex-wrap:wrap;">
-    <input id="r-name" placeholder="Ваше имя" style="flex:1 1 200px; padding:14px; border:1px solid #ccc; border-radius:10px; font-size:16px;">
-    <select id="r-rating" style="flex:0 0 200px; padding:14px; border:1px solid #ccc; border-radius:10px; font-size:16px;">
-      <option value="5">★★★★★ 5</option>
-      <option value="4">★★★★ 4</option>
-      <option value="3">★★★ 3</option>
-    </select>
-  </div>
-
-  <textarea id="r-text" placeholder="Как прошла поездка? Что запомнилось на Афоне?" style="width:100%; box-sizing:border-box; margin-top:15px; padding:14px; border:1px solid #ccc; border-radius:10px; height:110px; font-size:16px;"></textarea>
-
-  <div style="display:flex; gap:12px; margin-top:15px;">
-    <button id="btn-wa" style="flex:1; background:#25D366; color:#fff; border:none; padding:16px; border-radius:10px; font-weight:bold; font-size:16px; cursor:pointer;">WhatsApp + на сайт</button>
-    <button id="btn-viber" style="flex:1; background:#7360F2; color:#fff; border:none; padding:16px; border-radius:10px; font-weight:bold; font-size:16px; cursor:pointer;">Viber + на сайт</button>
-  </div>
-
-  <div id="reviews-list" style="margin-top:30px; width:100%;"></div>
-  <div style="text-align:center; margin-top:15px;">
-    <button id="btn-clear-test" style="background:none; border:1px dashed #ccc; color:#888; padding:8px 16px; border-radius:8px; font-size:13px; cursor:pointer;">🗑️ Удалить тестовые отзывы (только у меня)</button>
-  </div>
-</section>
-
-<script>
-const WA="306944476923";
-const KEY="athos_rev_full";
-function load(){
-  let list=JSON.parse(localStorage.getItem(KEY)||"[]");
-  document.getElementById('reviews-list').innerHTML = list.map(r=>`
-    <div style="padding:15px 0; border-top:1px solid #eee;">
-      <b>${r.name}</b> ${'★'.repeat(r.rating)} <small style="color:#888;">${r.date}</small>
-      <p style="margin:8px 0 0 0;">${r.text}</p>
-    </div>`).join('') || '<p style="color:#888; text-align:center; padding:20px 0;">Пока 3 отзыва выше. Ваш будет первым новым — появится сразу.</p>';
-}
-load();
-function send(type){
-  let n=document.getElementById('r-name').value.trim();
-  let rt=document.getElementById('r-rating').value;
-  let t=document.getElementById('r-text').value.trim();
-  if(!n||!t){alert('Заполните имя и отзыв'); return;}
-  let rev={name:n, rating:+rt, text:t, date:new Date().toLocaleDateString()};
-  let list=JSON.parse(localStorage.getItem(KEY)||"[]"); list.unshift(rev); localStorage.setItem(KEY, JSON.stringify(list)); load();
-  let msg=`ОТЗЫВ athos-guide.com%0AИмя:${n}%0AОценка:${rt}%0AТекст:${t}`;
-  if(type==='wa') window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
-  if(type==='viber'){ navigator.clipboard.writeText(`${n}: ${t}`); window.location.href=`viber://chat?number=%2B${WA}`; }
-  document.getElementById('r-name').value=''; document.getElementById('r-text').value='';
-}
-document.getElementById('btn-wa').onclick=()=>send('wa');
-document.getElementById('btn-viber').onclick=()=>send('viber');
-    document.getElementById('btn-clear-test').onclick=()=>{if(confirm('Удалить тестовые отзывы с этого устройства?')){localStorage.removeItem('athos_rev_full');localStorage.removeItem('athos_rev');location.reload();}};
-</script>
                 
                
 </body>
