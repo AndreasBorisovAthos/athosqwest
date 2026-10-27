@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+html,body{margin:0;padding:0;height:100%}
+#map{width:100%;height:600px}
+.popup-title{font-weight:700;font-size:15px}
+.popup-year{font-size:12px;color:#64748b;margin-bottom:6px}
+.popup-relic{font-size:13px;margin-bottom:10px}
+.popup-btn{display:block;background:#1e40af;color:#fff;text-align:center;padding:8px;border-radius:8px;text-decoration:none;font-weight:600;font-size:13px}
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+var map = L.map('map').setView([40.255, 24.26], 11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution: 'Leaflet | © OSM | Andreas Borisov'
+}).addTo(map);
+map.attributionControl.setPrefix('Leaflet');
 
+var monasteries=[
+["Великая Лавра",963,40.1713,24.3816,"Мощи Св. Афанасия"],
+["Ватопед",972,40.3142,24.2111,"Пояс Богородицы"],
+["Иверский",976,40.2436,24.2822,"Вратарница"],
+["Хиландар",1198,40.343,24.1225,"Троеручица"],
+["Дионисиат",1374,40.2957,24.2775,"Десница Иоанна"],
+["Кутлумуш",1100,40.2558,24.2472,"Страшное Предстательство"],
+["Пантократор",1363,40.2834,24.2661,"Геронтисса"],
+["Ксиропотам",1000,40.2283,24.2214,"Частица Креста"],
+["Зограф",980,40.305,24.1598,"Св. Георгий"],
+["Дохиар",1100,40.2675,24.1742,"Скоропослушница"],
+["Каракал",1100,40.2236,24.3077,"Варфоломей"],
+["Филофей",992,40.2253,24.2899,"Сладкое Лобзание"],
+["Симонопетра",1257,40.1895,24.2467,"Марии Магдалины"],
+["Св. Павла",1100,40.1603,24.2875,"Дары Волхвов"],
+["Ставроникита",1000,40.2677,24.2769,"Св. Николая"],
+["Ксенофонт",1100,40.2493,24.1957,"Одигитрия"],
+["Григориат",1310,40.1805,24.2557,"Анастасии"],
+["Эсфигмен",1000,40.3535,24.1353,"Вознесения"],
+["Пантелеимонов Русский",1200,40.2386,24.2015,"Глава Пантелеимона"],
+["Констамонит",1100,40.2869,24.1718,"Одигитрия"]
+];
+
+for(var i=0;i<monasteries.length;i++){
+  var m=monasteries[i];
+  var marker=L.marker([m[2],m[3]]).addTo(map);
+  var html='<div><div class="popup-title">'+m[0]+'</div><div class="popup-year">'+m[1]+' г.</div><div class="popup-relic">'+m[4]+'</div><a class="popup-btn" href="https://wa.me/306944476923?text='+encodeURIComponent(m[0])+'" target="_blank">Оформить визу</a></div>';
+  marker.bindPopup(html);
+}
+</script>
+</body>
+</html>
