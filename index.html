@@ -929,7 +929,7 @@ document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('clic
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzDvgFo8RNltazv7sMgirAhSBdWg0iA4ZRS3kdNel18pZOVnUC4H5TYHlTV8gGmoRnd8w/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxgwpb8gX8TnFQUc8tNftfu6j2kqU3GxL17JuJ6PslnNBXPTaPTMEHraR44mnYW1O1s4w/exec";
 const listEl = document.getElementById('reviews-list');
 function stars(n){ n=+n||5; return '<span style="color:#D4AF37; letter-spacing:.15em">'+ '★'.repeat(n) + '<span style="color:#E8DDC7">'+ '★'.repeat(5-n)+'</span></span>'; }
 function esc(s){ return (s||'').replace(/[&<>]/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;' }[m])) }
@@ -959,7 +959,7 @@ loadReviews();
 </section>
 <!-- КОНЕЦ НОВОГО БЛОКА -->
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzDvgFo8RNltazv7sMgirAhSBdWg0iA4ZRS3kdNel18pZOVnUC4H5TYHlTV8gGmoRnd8w/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxgwpb8gX8TnFQUc8tNftfu6j2kqU3GxL17JuJ6PslnNBXPTaPTMEHraR44mnYW1O1s4w/exec";
 async function loadLiveReviews(){
   const r = await fetch(API_URL); const data = await r.json();
   let html=""; data.forEach(v=>{ html+=`<div style="background:#fff;padding:15px;border-radius:8px;"><b>${v.name} ${v.rating}★</b> ${v.date||''}<br>${v.text}</div>`; });
