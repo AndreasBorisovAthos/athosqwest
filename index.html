@@ -897,21 +897,7 @@ loadReviews();
 </section>
 <!-- КОНЕЦ НОВОГО БЛОКА -->
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbxgwpb8gX8TnFQUc8tNftfu6j2kqU3GxL17JuJ6PslnNBXPTaPTMEHraR44mnYW1O1s4w/exec";
-async function loadLiveReviews(){
-  const r = await fetch(API_URL); const data = await r.json();
-  let html=""; data.forEach(v=>{ html+=`<div style="background:#fff;padding:15px;border-radius:8px;"><b>${v.name} ${v.rating}★</b> ${v.date||''}<br>${v.text}</div>`; });
-  document.getElementById("reviews-list-live").innerHTML = html || 'Пока нет отзывов';
-}
-async function sendLiveReview(){
-  const name=document.getElementById("rv-name").value; const rating=document.getElementById("rv-rating").value; const text=document.getElementById("rv-text").value;
-  if(!name||!text){alert("Заполните");return;}
-  await fetch(API_URL,{method:"POST",mode:"no-cors",body:JSON.stringify({name,rating,text})});
-  document.getElementById("rv-status-live").innerText="Спасибо! Появится через 5 сек";
-  setTimeout(loadLiveReviews,2000);
-}
-loadLiveReviews();
-</script>           
+
                
 <!-- SEO-БЛОК ДЛЯ GOOGLE - СТАТИЧНЫЕ ОТЗЫВЫ (видны и людям и Google) -->
 <section id="reviews-seo" style="max-width:1100px; margin:0 auto; padding:20px 24px 60px;" itemscope itemtype="https://schema.org/ItemList">
