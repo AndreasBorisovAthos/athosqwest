@@ -902,6 +902,22 @@ loadReviews();
 </div>
 <div style="display:none;">Гид на Афоне для паломников из США, диамонитирион виза на Афон для русских в Америке</div>
 <p>Гид на Афоне для русских паломников из США, Канады, Германии, Молдовы, Украины, Армении, Грузии — оформление диамонитирион и виза на Афон на русском языке.</p>
-
+<script>
+// Авто-счетчик отзывов из Google Таблицы
+fetch("https://script.google.com/macros/s/AKfycbxukMOn3NKMoxxk8mAl94Kt0uo1hJny-eA1Q6MeXS2GBWLmIP1DJGx8yC0b7a7ulb8wrg/exec")
+  .then(r => r.json())
+  .then(data => {
+    const scripts = document.querySelectorAll('script[type="application/ld+json"]');
+    scripts.forEach(s => {
+      try {
+        let json = JSON.parse(s.textContent);
+        if(json["@type"] === "Product" && json.aggregateRating){
+          json.aggregateRating.reviewCount = data.count.toString();
+          s.textContent = JSON.stringify(json);
+        }
+      } catch(e){}
+    });
+  });
+</script>
             </body>
 </html>
